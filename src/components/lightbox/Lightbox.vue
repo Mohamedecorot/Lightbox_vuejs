@@ -9,9 +9,7 @@ import './LightboxDirective'
 import LightboxImage from './LightboxImage'
 import store from './LightboxStore'
 export default {
-    components: {
-        LightboxImage
-    }
+    components: { LightboxImage },
     data () {
         return {
             state: store.state
