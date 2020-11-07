@@ -1,6 +1,7 @@
 <template>
-    <div class="lightbox" v-if="image">
+    <div class="lightbox" v-if="image" @click="close">
         <lightbox-image :image="image"></lightbox-image>
+        <div class="lightbox__close"></div>
     </div>
 </template>
 
@@ -15,6 +16,9 @@ export default {
             state: store.state
         }
     },
+    methods: {
+        close () { store.close() }
+    },
     computed: {
         image () { 
             if (this.state.index !== false) {
@@ -25,4 +29,4 @@ export default {
 }
 </script>
 
-<style src="./lightbox.scss" ></style>
+<style src="./lightbox.scss" lang="css" ></style>

@@ -1,7 +1,9 @@
 <template>
-    <div>
-        <div v-if="loading">chargement ...</div>
-        <img :src="src" class="lightbox__image" :style="style">
+    <div @click.stop>
+        <div v-if="loading" class="lightbox__loading">=</div>
+        <transition name="lightbox-fade">
+            <img :src="src" class="lightbox__image" :style="style" :key="src">
+        </transition>
     </div>
 </template>
 
@@ -49,9 +51,13 @@ export default {
             this.resizeImage(image)
         }
         image.src = this.image
-        window.addEventListener('resize', () => {
+        this.resizeEvent = () => {
             this.resizeImage(image)
-        })
+        }
+        window.addEventListener('resize', this.resizeEvent)
+    },
+    destroyed () {
+        window.removeEventListener('resize', this.resizeEvent)
     }
 }
 </script>
