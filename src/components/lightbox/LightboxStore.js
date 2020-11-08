@@ -2,17 +2,22 @@ class LightboxStore {
 
     constructor () {
         this.state = {
-            images: [],
-            index: false
+            images: {},
+            index: false,
+            group: false
         }
     }
 
-    addImage (url) {
-        return this.state.images.push(url) - 1
+    addImage (url, group) {
+        if (this.state.images[group] === undefined) {
+            this.state.images[group] = []
+        }
+        return this.state.images[group].push(url) - 1
     }
 
-    open (url) {
-        this.state.index = this.state.images.findIndex(image => image === url)
+    open (url, group) {
+        this.state.group = group
+        this.state.index = this.state.images[group].findIndex(image => image === url)
     }
 
     close () {
@@ -21,7 +26,7 @@ class LightboxStore {
 
     next () {
         this.state.index++
-        if (this.state.index >= this.state.images.length) {
+        if (this.state.index >= this.state.images[this.state.group].length) {
             this.state.index = 0
         }
     }
@@ -29,12 +34,12 @@ class LightboxStore {
     prev () {
         this.state.index--
         if (this.state.index < 0) {
-            this.state.index = this.state.images.length - 1
+            this.state.index = this.state.images[this.state.group].length - 1
         }
     }   
     
-    remove (url) {
-        this.state.images = this.state.images.filter(image => image !== url)
+    remove (url, group) {
+        this.state.images[group] = this.state.images.filter(image => image !== url)
     }
 }
 

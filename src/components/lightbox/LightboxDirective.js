@@ -2,17 +2,16 @@ import Vue from 'vue'
 import store from './LightboxStore'
 
 Vue.directive('lightbox', {
-    bind (el) {
-        store.addImage(el.getAttribute('href'))
+    bind (el, binding) {
+        let group = binding.value === undefined ? 'default' : 'sports'
+        store.addImage(el.getAttribute('href'), group)
         el.addEventListener('click', function (e) {
             e.preventDefault()
-            store.open(el.getAttribute('href'))
+            store.open(el.getAttribute('href'), group)
         })
     },
-    update (el) {
-
-    },
-    unbind (el) {
-        store.remove(el.getAttribute('href'))
+    unbind (el, binding) {
+        let group = binding.value === undefined ? 'default' : 'sports'
+        store.remove(el.getAttribute('href'), group)
     }
 })
